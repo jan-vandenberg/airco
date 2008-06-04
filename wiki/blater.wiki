@@ -1,0 +1,7 @@
+de blater maakt momentaal gebruik van een irssi proxy om zn geblaat te laten horen in de irc kanalen. Wat vinden jullie hiervan? Dit kan op verschillende manieren anders:
+
+- Verbinding maken met een irc server, een kanaal binnengaan, het bericht achterlaten, verbinding verbreken.
+
+- Verbinding maken met een irc server, een opdracht geven aan een bot in het kanaal, verbinding verbreken.
+
+- Verbinding maken met een bot die via een socket aan te spreken is, opdracht geven, verbinding verbreken.
