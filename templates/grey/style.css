@@ -1,0 +1,248 @@
+html, body
+{
+	margin: 0px;
+	padding: 0px;
+	color: #eee;
+	background-color: #303030;
+	font: 8pt verdana;
+}
+
+div.container
+{
+	position: absolute;
+	left: 50%;
+	margin-left: -450px;
+	width: 900px;
+	min-height: 100%;
+	background-color: #333;
+	border-left: 1px solid #555;
+	border-right: 1px solid #555;
+}
+
+div.header
+{
+	float: left;
+	width: 880px;
+	height: 47px;
+	padding: 3px 20px 0px 0px;
+	background-color: #555;
+	font: 25pt 'Trebuchet MS';
+	text-align: right;
+}
+
+div.nav
+{
+	float: left;
+	width: 868px;
+	height: 23px;
+	padding: 3px 15px 0px 15px;
+	color: #ddd;
+	background-color: #666;
+	border-bottom: 3px solid #555;
+	border-left: 1px solid #555;
+	border-right: 1px solid #555;
+	font: 12pt 'Trebuchet MS';
+}
+
+div.main
+{
+	float: left;
+	width: 900px;
+}
+
+div.logBlock
+{
+	float: left;
+	width: 150px;
+	height: 475px;
+	margin: 15px;
+	background-color: #444;
+	text-align: center;
+}
+
+div.form
+{
+	margin: auto;
+	margin-top: 50px;
+	padding: 10px;
+	width: 220px;
+	text-align: center;
+	border: 1px solid #444;
+}
+
+div.quote
+{
+	float: left;
+	margin: 15px 15px 0px 15px;
+	padding: 10px;
+	width: 850px;
+	background-color: #444;
+}
+
+a
+{
+	color: #ccc;
+	font-weight: bold;
+	text-decoration: none;
+}
+a:hover
+{
+	background-color: #555;
+}
+
+.nav a
+{
+	color: #ddd;
+}
+.nav a:hover
+{
+	background-color: #666;
+	text-decoration: underline;
+}
+
+p
+{
+	margin: 0px;
+}
+
+p.log, p.text
+{
+	padding: 15px;
+}
+
+.logBlock p
+{
+	padding: 3px;
+	margin-top: 5px;
+}
+
+p.quote
+{
+	min-height: 75px;
+}
+
+p.logMonth
+{
+	padding: 3px;
+	margin: 0px;
+	font-weight: bold;
+	background-color: #666;
+}
+
+p.postedBy
+{
+	float: right;
+	font: 9pt 'Trebuchet MS';
+	font-style: italic;
+}
+
+img
+{
+	border: none;
+	margin: none;
+}
+
+div.header img
+{
+	float: left;
+	border: none;
+	margin: 7px 0px 0px 10px;
+}
+
+.quote div
+{
+	float: right;
+	margin-top: -25px;
+}
+
+input
+{
+	padding: 3px;
+	width: 200px;
+	color: #eee;
+	background-color: #444;
+	font-size: 1.0em;
+	border: none;
+}
+
+.form input
+{
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+.nav input
+{
+	float: left;
+	padding: 2px;
+	font: 8pt verdana;
+	background-color: #666;
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+input.search
+{
+	float: left;
+	width: 20px;
+	margin: 0px;
+	padding: 0px;
+	background-color: #666;
+	border: none;
+}
+
+input.button
+{
+	width: 204px;
+	margin: 0px;
+	background-color: #666;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.form textarea
+{
+	padding: 3px;
+	margin-bottom: 5px;
+	width: 300px;
+	height: 150px;
+	color: #eee;
+	background-color: #444;
+	font-size: 1.0em;
+	border: none;
+}
+
+.form select 
+{
+	padding: 3px;
+	margin-bottom: 5px;
+	color: #eee;
+	background-color: #444;
+	font-size: 1.0em;
+	border: none;
+}
+
+.quote select 
+{
+	padding: 3px;
+	color: #eee;
+	background-color: #555;
+	font-size: 1.0em;
+	border: none;
+}
+
+.nav form
+{
+	float: right;
+	margin: 0px;
+	padding: 0px;
+}
+
+.quote form
+{
+	float: right;
+	clear: both;
+	margin: 5px 0px 0px 0px;
+	padding: 0px;
+}
