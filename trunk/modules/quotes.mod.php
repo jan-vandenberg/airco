@@ -25,35 +25,29 @@ switch($do)
 	$extraButtons = "<a href=\"index.php?mod=quotes&do=add\" title=\"toevoegen\"><img src=\"images/add.png\" width=\"30\" height=\"30\" alt=\"links\" /></a>";
 	if (!empty($quotes))
 	{
+		$quote->rate();
 		foreach ($quotes AS $key=>$val)
 		{
 			$count++;
 			$postedBy = $quote->getPoster($val['userid']);
 			$quoteDate = strftime("%A %d %B %Y",$val['date']);
+			if($quote->checkRating($val['id']))
+			{
+				$rateForm = $quote->form_rating($val['id'], $count);
+			}
+			else
+			{
+				$rateForm = false;
+			}
 			$content .= "
 				<div class=\"quote\">
 					<p class=\"postedBy\">
 						posted by {$postedBy}
 					</p>
-					<form name=\"rating{$count}\" method=\"post\">
-						<select name=\"score\" onchange=\"rating{$count}.submit()\">
-							<option style=\"font-weight: bold;\">rate it</option>
-							<option value=\"1\">1</option>
-							<option value=\"2\">2</option>
-							<option value=\"3\">3</option>
-							<option value=\"4\">4</option>
-							<option value=\"5\">5</option>
-						</select>
-					</form>
+					{$rateForm}
 					<p><b>$quoteDate</b></p>
 					<p class=\"quote\">{$val['quote']}</p>
-					<div>
-						<img src=\"images/star-on.png\" width=\"25\" height=\"25\" alt=\"star\" />
-						<img src=\"images/star-on.png\" width=\"25\" height=\"25\" alt=\"star\" />
-						<img src=\"images/star-half.png\" width=\"25\" height=\"25\" alt=\"star\" />
-						<img src=\"images/star-off.png\" width=\"25\" height=\"25\" alt=\"star\" />
-						<img src=\"images/star-off.png\" width=\"25\" height=\"25\" alt=\"star\" />
-					</div>
+					<div><div style=\"width: {$val['rating']}%\"></div></div>
 				</div>
 			";
 		}

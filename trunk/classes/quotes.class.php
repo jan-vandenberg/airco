@@ -126,17 +126,20 @@ class quotes extends forms
 	public function getQuotes()
 	{
 		$count = 0;
-		$query = mysql_query("SELECT date, userid, quote from quotes ORDER BY date");
+		$query = mysql_query("SELECT id, date, userid, quote, rating from quotes ORDER BY date");
 		while ($result = mysql_fetch_assoc($query))
 		{
 			$count++;
+			$quotes[$count]['id'] = $result['id'];
 			$quotes[$count]['date'] = $result['date'];
 			$quoteText = htmlspecialchars($result['quote']);
 			$quotes[$count]['quote'] = nl2br($quoteText);
 			$quotes[$count]['userid'] = $result['userid'];
+			$quotes[$count]['rating'] = round(($result['rating']/5)*100);
 		}
 		return $quotes;
 	}
+	
 	public function getPoster($id)
 	{
 		$query = mysql_query("SELECT username from users WHERE id = '{$id}'");
@@ -145,6 +148,74 @@ class quotes extends forms
 			$postedBy = $result['username'];
 		}
 		return $postedBy;
+	}
+	
+	public function checkRating($id)
+	{
+		$query = mysql_query("SELECT quoteID from quoteRating WHERE quoteID = '{$id}' AND userID = '{$_SESSION['userdata']['id']}'");	
+		$result = mysql_fetch_assoc($query);
+		if(count($result['quoteID']) < 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public function form_rating($id, $count)
+	{
+		$form = "
+			<form name=\"rating{$count}\" method=\"post\">
+				<input type=\"hidden\" name=\"data[quoteid]\" value=\"{$id}\" />
+				<select name=\"data[score]\" onchange=\"rating{$count}.submit()\">
+					<option style=\"font-weight: bold;\">rate it</option>
+					<option value=\"1\">1</option>
+					<option value=\"2\">2</option>
+					<option value=\"3\">3</option>
+					<option value=\"4\">4</option>
+					<option value=\"5\">5</option>
+				</select>
+			</form>
+		";		
+		return $form;		
+	}
+	
+	public function rate()
+	{
+		if(count($this->data) > 0)
+		{
+			mysql_query('insert into quoteRating (quoteID, userID , rating)
+						 values (\''.$this->data['quoteid'].'\',\''.$_SESSION['userdata']['id'].'\', \''.$this->data['score'].'\')') or die(mysql_error());
+			
+			$newRating = $this->getRating($this->data['quoteid']);
+			mysql_query('update quotes set rating=\''.$newRating.'\' where id=\''.$this->data['quoteid'].'\'');
+			
+			return true;
+		}
+		return false;
+	}
+	
+	public function getRating($id)
+	{
+		$query = mysql_query("SELECT rating from quoteRating WHERE quoteID = '{$id}'");
+		$score = 0;
+		$count = 0;
+		$rating = 0.0;
+
+		while ($result = mysql_fetch_assoc($query))
+		{
+			$count++;
+			$score = $score + $result['rating'];
+		}
+		if ($score > 0)
+		{
+			$rating = $score/$count;
+			$rating = round($rating, 2);
+			echo $rating = str_replace(",",".",$rating);
+		}
+		return $rating;
 	}
 }
 ?>
