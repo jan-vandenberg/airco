@@ -153,6 +153,16 @@ div.header img
 {
 	float: right;
 	margin-top: -25px;
+	width: 140px;
+	height: 25px;
+	background: url('../../images/stars-off.png') no-repeat;
+}
+
+.quote div div
+{
+	float: none;
+	margin: 0px;
+	background: url('../../images/stars-on.png') no-repeat;
 }
 
 input
