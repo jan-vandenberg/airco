@@ -70,6 +70,11 @@ class users extends forms
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$_SESSION['userdata'] = $result;
+			if($this->data['cookie'] == "on")
+			{
+				setcookie ("aircookie_usr",$_SESSION['userdata']['username'],time()+2592000,"/","hekjeurk.nl",0);
+				setcookie ("aircookie_pwd",$_SESSION['userdata']['password'],time()+2592000,"/","hekjeurk.nl",0);
+			}
 			return true;
 		}
 		
@@ -87,6 +92,10 @@ class users extends forms
 			if(isset($_SESSION['userdata']['username']) and isset($_SESSION['userdata']['password'])) {
 				return $this->login($_SESSION['userdata']['username'], $_SESSION['userdata']['password'], true);
 			}
+		} elseif(is_array($_COOKIE)) {
+			if(isset($_COOKIE['aircookie_usr']) and isset($_COOKIE['aircookie_pwd'])) {
+				return $this->login($_COOKIE['aircookie_usr'], $_COOKIE['aircookie_pwd'], true);
+			}
 		}
 		
 		return false;
@@ -99,11 +108,12 @@ class users extends forms
 		<div class="form">
 			<form method="post">
 				<input type="hidden" name="data[login]" value="1" />
-				<input type="text" name="data[username]" value="gebrukkersnaam" onclick="this.value=\'\'" /><br />
-				<input type="password" name="data[password]" value="wachtwoord" onclick="this.value=\'\'" /><br />
-				<input class="button" type="submit" name="submit" value="inloggen" />
-			</form>
+				<input type="text" name="data[username]" value="gebrukkersnaam" onfocus="this.value=\'\'" /><br />
+				<input type="password" name="data[password]" value="wachtwoord" onfocus="this.value=\'\'" /><br />
+				<input class="button" type="submit" name="submit" value="inloggen" /><br />
 		</div>
+				<input class="cookie" type="checkbox" name="data[cookie]" value="on" /> vergeet mun niet
+			</form>
 		';
 		
 		return $form;

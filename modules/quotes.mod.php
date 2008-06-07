@@ -42,7 +42,7 @@ switch($do)
 			$content .= "
 				<div class=\"quote\">
 					<p class=\"postedBy\">
-						posted by {$postedBy}
+						posted by {$postedBy}, {$val['votes']} votes
 					</p>
 					{$rateForm}
 					<p><b>$quoteDate</b></p>
