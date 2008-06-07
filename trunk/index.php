@@ -96,7 +96,7 @@ switch($mod)
 	break;
 	
 	default:
-	$headerText = "AIRCO, it really whips the lama's ass";
+	$headerText = "AIRCO, so cool it hurts";
 	if(!$user->validate())
 	{
 		$content = $user->form_login();
