@@ -11,19 +11,20 @@ echo <<< TEMPLATE
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" media="all" href="templates/{$template}/style.css" />
-	<title>#channel A.I.R.C.O</title>
+	<link rel="stylesheet" type="text/css" media="all" href="templates/{$config['global']['template']}/style.css" />
+	<title>{$config['global']['channel']} A.I.R.C.O</title>
 </head>
 <body{$bodyLoad}>
 <div class="container">
 	<div class="header">
 		<a href="index.php" title="home"><img src="images/home.png" width="30" height="30" alt="home" /></a>
+		<a href="mailto:brynk@hekjeurk.nl?subject=feature request hekjeurk.nl" title="ideas"><img src="images/idea.png" width="30" height="30" alt="ideas" /></a>
 		<a href="index.php?mod=logs" title="logs"><img src="images/logs.png" width="30" height="30" alt="logs" /></a>
 		<a href="index.php?mod=quotes" title="quotes"><img src="images/quotes.png" width="30" height="30" alt="quotes" /></a>
 		<a href="index.php?mod=pics" title="pics"><img src="images/pics.png" width="30" height="30" alt="pics" /></a>
 		{$extraButtons}
 		<a href="index.php?mod=logout" title="logout"><img src="images/logout.png" width="30" height="30" alt="logout" /></a>
-		#channel {$headerText}
+		#urk {$headerText}
 	</div>
 	<div class="nav">
 		<form method="post">

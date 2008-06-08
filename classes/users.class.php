@@ -10,11 +10,13 @@ class users extends forms
 	private $salt = 'Moomoo Poopoo';
 	private $data = array();
 	
-	public function __construct()
+	public function __construct($texts, $config)
 	{		
 		if(isset($_POST['data'])) {
 			$this->data = $_POST['data'];
 		}
+		$this->texts = $texts;
+		$this->config = $config;
 	}
 	
 	public function register()
@@ -24,26 +26,26 @@ class users extends forms
 		if(count($this->data) > 0) {
 			if(!empty($this->data['password1']) and !empty($this->data['password2'])) {
 				if($this->data['password1'] != $this->data['password2']) {
-					$this->addMessage('error', 'Wachtwoorden komen niet overeen.');
+					$this->addMessage('error', $this->texts['pwdCheck']);
 					$error = true;	
 				}
 			} else {
-				$this->addMessage('error', 'Wachtwoorden mogen niet leeg zijn.');
+				$this->addMessage('error', $this->texts['pwdEmpty']);
 				$error = true;
 			}
 			
 			if(empty($this->data['username'])) {
-				$this->addMessage('error', 'Gebruikersnaam mag niet leeg zijn.');
+				$this->addMessage('error', $this->texts['usrEmpty']);
 				$error = true;
 			}
 			
 			if(empty($this->data['mail'])) {
-				$this->addMessage('error', 'E-mail mag niet leeg zijn.');
+				$this->addMessage('error', $this->texts['mailEmpty']);
 				$error = true;
 			}
 			
 			if(!$this->checkUsername($this->data['username'])) {
-				$this->addMessage('error', 'Gebruikersnaam bestaat al.');
+				$this->addMessage('error', $this->texts['usrExists']);
 				$error = true;
 			}
 			
@@ -72,13 +74,13 @@ class users extends forms
 			$_SESSION['userdata'] = $result;
 			if($this->data['cookie'] == "on")
 			{
-				setcookie ("aircookie_usr",$_SESSION['userdata']['username'],time()+2592000,"/","hekjeurk.nl",0);
-				setcookie ("aircookie_pwd",$_SESSION['userdata']['password'],time()+2592000,"/","hekjeurk.nl",0);
+				setcookie ("aircookie_usr",$_SESSION['userdata']['username'],time()+2592000,"/",$config['hostname'],0);
+				setcookie ("aircookie_pwd",$_SESSION['userdata']['password'],time()+2592000,"/",$config['hostname'],0);
 			}
 			return true;
 		}
 		
-		$this->addMessage('error', 'Onjuiste gebruikersnaam of wachtwoord.');
+		$this->addMessage('error', $this->texts['wrongData']);
 		return false;
 	}
 	
@@ -108,11 +110,11 @@ class users extends forms
 		<div class="form">
 			<form method="post">
 				<input type="hidden" name="data[login]" value="1" />
-				<input type="text" name="data[username]" value="gebrukkersnaam" onfocus="this.value=\'\'" /><br />
-				<input type="password" name="data[password]" value="wachtwoord" onfocus="this.value=\'\'" /><br />
+				<input type="text" name="data[username]" value="'.$this->texts['username'].'" onfocus="this.value=\'\'" /><br />
+				<input type="password" name="data[password]" value="'.$this->texts['password'].'" onfocus="this.value=\'\'" /><br />
 				<input class="button" type="submit" name="submit" value="inloggen" /><br />
 		</div>
-				<input class="cookie" type="checkbox" name="data[cookie]" value="on" /> vergeet mun niet
+				<input class="cookie" type="checkbox" name="data[cookie]" value="on" /> '.$this->texts['rememberMe'].'
 			</form>
 		';
 		
@@ -129,7 +131,7 @@ class users extends forms
 				password1<br /><input type="password" name="data[password1]" /><br />
 				password2<br /><input type="password" name="data[password2]" /><br />
 				e-mail<br /><input type="text" name="data[mail]" /><br />
-				<input class="button" type="submit" name="submit" value="registrieren" />
+				<input class="button" type="submit" name="submit" value="'.$this->texts['register'].'" />
 			</form>
 		</div>
 		';

@@ -8,19 +8,28 @@ index
 session_start();
 setlocale(LC_ALL, 'nl_NL.utf8');
 
-//includes
-include 'includes/config.inc.php';
-include ("includes/{$language}.lang.php");
+//settings
+include 'classes/settings.class.php';
+$settings = new settings();
+$config = $settings->getConf();
+$texts = $settings->getTexts();
+
+//other includes
 include 'classes/forms.class.php';
 include 'classes/users.class.php';
 include 'classes/sql.class.php';
 
 //db connection
-$db = new sql();
-$db->connectDB($dbHost, $dbName, $dbUser, $dbPass);
+$db = new sql($lang['sql']);
+$db->connectDB(
+	$config['db']['host'],
+	$config['db']['name'],
+	$config['db']['user'],
+	$config['db']['pass']
+);
 
 //vars
-$user = new users();
+$user = new users($texts['users'], $config['global']);
 $mod = $_REQUEST['mod'];
 
 //module switch
@@ -31,7 +40,7 @@ switch($mod)
 	$crumbs = "<a href=\"index.php\">home</a> &raquo; logs";
 	if(!$user->validate())
 	{
-		$content = "<p class=\"text\">Log in fool!</p>";
+		$content = "<p class=\"text\">{$texts['users']['login']}</p>";
 	}
 	else
 	{
@@ -45,10 +54,10 @@ switch($mod)
 	
 	case 'register':
 	$headerText = "registreren";
-	$crumbs = "<a href=\"index.php\">home</a> &raquo; registreren";
+	$crumbs = "<a href=\"index.php\">home</a> &raquo; {$texts['users']['register']}";
 	if(!$user->validate())
 	{
-		$content = "<p class=\"text\">Log in fool!</p>";
+		$content = "<p class=\"text\">{$texts['users']['login']}</p>";
 	}
 	else
 	{
@@ -61,7 +70,7 @@ switch($mod)
 	$crumbs = "<a href=\"index.php\">home</a> &raquo; poidh";
 	if(!$user->validate())
 	{
-		$content = "<p class=\"text\">Log in fool!</p>";
+		$content = "<p class=\"text\">{$texts['users']['login']}</p>";
 	}
 	else
 	{
@@ -74,7 +83,7 @@ switch($mod)
 	$crumbs = "<a href=\"index.php\">home</a> &raquo; poidh";
 	if(!$user->validate())
 	{
-		$content = "<p class=\"text\">Log in fool!</p>";
+		$content = "<p class=\"text\">{$texts['users']['login']}</p>";
 	}
 	else
 	{
@@ -87,7 +96,7 @@ switch($mod)
 	$crumbs = "<a href=\"index.php\">home</a> &raquo; quotes";
 	if(!$user->validate())
 	{
-		$content = "<p class=\"text\">Log in fool!</p>";
+		$content = "<p class=\"text\">{$texts['users']['login']}</p>";
 	}
 	else
 	{
@@ -109,6 +118,6 @@ switch($mod)
 }
 
 //include template
-include ("templates/{$template}/grey.tmp.php");
+include ("templates/{$config['global']['template']}/{$config['global']['template']}.tmp.php");
 ?>
 
