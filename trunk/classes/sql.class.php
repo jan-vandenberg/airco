@@ -7,10 +7,15 @@ sql class
 
 class sql
 {
+	public function __construct($texts)
+	{		
+		$this->texts = $texts;
+	}
+	
 	public function connectDB($host, $db, $user, $pass)
 	{
-		mysql_connect($host, $user, $pass) or die ($lang_sql['connection']."<br />". mysql_error());
-		mysql_select_db($db) or die ($lang_sql['dbselect']."<br />". mysql_error());
+		mysql_connect($host, $user, $pass) or die ($this->texts['connection']."<br />". mysql_error());
+		mysql_select_db($db) or die ($this->texts['dbselect']."<br />". mysql_error());
 	}
 }
 

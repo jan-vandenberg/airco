@@ -5,23 +5,29 @@ configuration
 @author #urk team
 */
 
-//template name and language
-$template = "grey";
-$language = "uk";
+//global
+$global = array(
+	"hostname" => "website.com",
+	"channel" => "#channel",
+	"template" => "grey",
+	"language" => "uk"
+);
 
 //db info
-$dbHost = "localhost";
-$dbName = "hekjeurk";
-$dbUser = "username";
-$dbPass = "password";
+$db = array(
+	"host" => "localhost",
+	"name" => "database",
+	"user" => "username",
+	"pass" => "secret"
+);
 
 //IRC connection
-$ircConfig = array(
-	"server"	=> "server.com",
+$irc = array(
+	"server"	=> "my.ircproxy.com",
 	"port"		=> 1234,
 	"nickname"	=> "botnick",
 	"name"		=> "botname",
-	"password" 	=> "secret",
+	"password" 	=> "1234",
 	"channels"	=> array("#channel"),
 );
 

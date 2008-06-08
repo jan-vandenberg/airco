@@ -10,12 +10,13 @@ class quotes extends forms
 	private $data = array();
 	private $messages = array();
 	
-	public function __construct()
+	public function __construct($texts)
 	{		
 		if(isset($_POST['data']))
 		{
 			$this->data = $_POST['data'];
 		}
+		$this->texts = $texts;
 	}
 	
 	public function quote()
@@ -25,7 +26,7 @@ class quotes extends forms
 		if(count($this->data) > 0)
 		{
 			if(empty($this->data['quote'])) {
-				$this->addMessage('error', 'Quote moet inevuld worren.');
+				$this->addMessage('error', $this->texts['empty']);
 				$error = true;
 			}
 			
@@ -35,7 +36,7 @@ class quotes extends forms
 				mysql_query('insert into quotes (id, userid , date, dateAdded, quote)
 							 values (NULL, \''.$_SESSION['userdata']['id'].'\', \''.$date.'\', '.time().', \''.$this->data['quote'].'\')') or die(mysql_error());
 				
-				$externalMsg = 'er is een naaie quote eplaost duur ' . $_SESSION['userdata']['username'] .'';
+				$externalMsg = $this->texts['new'] . $_SESSION['userdata']['username'] .'';
 				include 'modules/chat.mod.php';
 
 				return true;
@@ -62,7 +63,7 @@ class quotes extends forms
 				'.$dateSelect["y"].'
                                 </select><br />
 				<textarea name="data[quote]">'.$this->getValue("quote").'</textarea>
-				<input class="button" style="width:302px;" type="submit" name="submit" value="toevoegen" />
+				<input class="button" style="width:302px;" type="submit" name="submit" value="'.$this->texts['gen']['add'].'" />
 			</form>
 		</div>
 		';
@@ -126,7 +127,14 @@ class quotes extends forms
 	public function getQuotes()
 	{
 		$count = 0;
-		$query = mysql_query("SELECT id, date, userid, quote, rating, votes from quotes ORDER BY date");
+		$start = 0;
+		$limit = $start.",100";
+		if(!isset ($order))
+		{
+			$order = "date";
+		}
+		
+		$query = mysql_query("SELECT id, date, userid, quote, rating, votes from quotes ORDER BY {$order} LIMIT {$limit}");
 		while ($result = mysql_fetch_assoc($query))
 		{
 			$count++;
@@ -204,6 +212,7 @@ class quotes extends forms
 		$score = 0;
 		$count = 0;
 		$rating = 0.0;
+		$ratingData = "";
 
 		while ($result = mysql_fetch_assoc($query))
 		{
@@ -216,9 +225,9 @@ class quotes extends forms
 			$rating = round($rating, 2);
 			$rating = str_replace(",",".",$rating);
 		}
-		$rating['score'] = $rating;
-		$rating['count'] = $count;
-		return $rating;
+		$ratingData['rating'] = $rating;
+		$ratingData['count'] = $count;
+		return $ratingData;
 	}
 }
 ?>

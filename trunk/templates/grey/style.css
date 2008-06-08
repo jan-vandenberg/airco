@@ -192,6 +192,11 @@ input
 	border-bottom: 1px solid #ccc;
 }
 
+input.cookie
+{
+	margin: 10px 0px 0px 350px;
+}
+
 input.search
 {
 	float: left;

@@ -9,16 +9,17 @@ class irc
 {
 	public $socket;
 	
-	function __construct($server, $port)
+	function __construct($config)
 	{
-		$this->socket = fsockopen($server, $port);
+		$this->socket = fsockopen($config['server'], $config['port']);
+		$this->config = $config;
 	}
 	
-	function login($password, $name, $nick)
+	function login()
 	{
-		$this->send('PASS', $password);
-		$this->send('USER', $nick.' moo '.$nick.' :'.$name);
-		$this->send('NICK', $nick);
+		$this->send('PASS', $this->config['password']);
+		$this->send('USER', $this->config['nick'].' moo '.$this->config['nick'].' :'.$this->config['name']);
+		$this->send('NICK', $this->config['nick']);
 	}
 	
 	function run()

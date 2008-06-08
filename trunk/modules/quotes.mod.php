@@ -6,13 +6,14 @@ quotes module
 */
 
 include 'classes/quotes.class.php';
+$quote = new quotes($texts['quotes']);
 $do = $_REQUEST['do'];
-$quote = new quotes();
+$texts = $texts['quotes'];
 
 switch($do)
 {
 	case 'add':
-	$crumbs = "<a href=\"index.php\">home</a> &raquo; <a href=\"index.php?mod=quotes\">quotes</a> &raquo; toevoegen";
+		$crumbs = "<a href=\"index.php\">home</a> &raquo; <a href=\"index.php?mod=quotes\">quotes</a> &raquo; {$texts['gen']['add']}";
 	if(!$quote->quote())
 	{
     	    $content = $quote->form_quote();
@@ -22,7 +23,7 @@ switch($do)
 	default:
 	$quotes = $quote->getQuotes();
 	$count = 0;
-	$extraButtons = "<a href=\"index.php?mod=quotes&do=add\" title=\"toevoegen\"><img src=\"images/add.png\" width=\"30\" height=\"30\" alt=\"links\" /></a>";
+	$extraButtons = "<a href=\"index.php?mod=quotes&do=add\" title=\"{$texts['gen']['add']}\"><img src=\"images/add.png\" width=\"30\" height=\"30\" alt=\"links\" /></a>";
 	if (!empty($quotes))
 	{
 		$quote->rate();
@@ -42,7 +43,7 @@ switch($do)
 			$content .= "
 				<div class=\"quote\">
 					<p class=\"postedBy\">
-						posted by {$postedBy}, {$val['votes']} votes
+					{$texts['postedby']} {$postedBy}, {$val['votes']} {$texts['votes']}
 					</p>
 					{$rateForm}
 					<p><b>$quoteDate</b></p>
@@ -54,7 +55,7 @@ switch($do)
 	}
 	else
 	{
-		$content = "<p class=\"text\">nog gien quotes<br />klik op et warreldbolletjen om er iene toe te voegen</p>";
+		$content = "<p class=\"text\">{$texts['noquotes']}</p>";
 	}
 }
 ?>
