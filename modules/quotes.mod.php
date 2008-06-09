@@ -6,7 +6,7 @@ quotes module
 */
 
 include 'classes/quotes.class.php';
-$quote = new quotes($texts['quotes']);
+$quote = new quotes($texts['quotes'], $config['irc']);
 $do = $_REQUEST['do'];
 $texts = $texts['quotes'];
 
