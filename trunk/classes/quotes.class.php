@@ -10,13 +10,14 @@ class quotes extends forms
 	private $data = array();
 	private $messages = array();
 	
-	public function __construct($texts)
+	public function __construct($texts, $config)
 	{		
 		if(isset($_POST['data']))
 		{
 			$this->data = $_POST['data'];
 		}
 		$this->texts = $texts;
+		$this->config = $config;
 	}
 	
 	public function quote()
@@ -37,6 +38,7 @@ class quotes extends forms
 							 values (NULL, \''.$_SESSION['userdata']['id'].'\', \''.$date.'\', '.time().', \''.$this->data['quote'].'\')') or die(mysql_error());
 				
 				$externalMsg = $this->texts['new'] . $_SESSION['userdata']['username'] .'';
+				$config = $this->config;
 				include 'modules/chat.mod.php';
 
 				return true;

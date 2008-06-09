@@ -18,25 +18,15 @@ if(isset($externalMsg)) {
 }
 
 /* IRC */
-//data from config file, doesn't load
-$config['irc'] = array(
-	"server"	=> "my.ircproxy.com",
-	"port"		=> 1234,
-	"nickname"	=> "botnick",
-	"name"		=> "botname",
-	"password" 	=> "1234",
-	"channels"	=> array("#channel"),
-);
-
 require 'classes/irc.class.php';
-$irc = new irc($config['irc']);
+$irc = new irc($config);
 $irc->login();
 $count = 0;
 
 do {
 	
 	if($count == 15) {
-		foreach($config['irc']['channels'] as $channel) {
+		foreach($config['channels'] as $channel) {
 			$irc->send("PRIVMSG", $channel.' :'.$msg);
 		}
 		$irc->send("NICK", "dwa");
